@@ -25,7 +25,7 @@ if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
 # Change to CONF_FILE = "settings.json" if you have problems with env variables
-CONF_FILE = os.getenv('CONF_PATH')
+CONF_FILE = get_project_dir("settings.json") #os.getenv('CONF_PATH')
 
 # Load configuration settings from JSON
 logger.info("Loading configuration settings from JSON...")
@@ -44,12 +44,9 @@ def load_and_split_iris(save_train_path: os.path, save_inference_path: os.path, 
     iris = load_iris()
     X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target,
                                                         test_size=test_size, random_state=42)
-
-
-
+    # Standard scaler to train and test X
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
-
 
     # Saving training data
     train_df = pd.DataFrame(X_train, columns=iris.feature_names)
