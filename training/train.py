@@ -76,15 +76,15 @@ class IrisNN(nn.Module):
         # Additional hidden layers
         self.fc2 = nn.Linear(256, 128)
         self.fc3 = nn.Linear(128, 64)
-        self.fc4 = nn.Linear(64, 32)  # New layer
-        self.fc5 = nn.Linear(32, 3)   # Output layer
+        self.fc4 = nn.Linear(64, 32)  
+        self.fc5 = nn.Linear(32, 3)  
 
         # Dropout layer
         self.dropout = nn.Dropout(0.5)  # Dropout layer with 50% probability
 
     def forward(self, x):
         x = F.relu(self.fc1(x))
-        x = self.dropout(x)  # Apply dropout after the first hidden layer
+        x = self.dropout(x)  
         x = F.relu(self.fc2(x))
         x = F.relu(self.fc3(x))
         x = F.relu(self.fc4(x))
@@ -189,7 +189,7 @@ class Training:
 def main():
     logger.add("_logs_for_train.txt", level="INFO")
 
-    # Log a test message to ensure logging is working
+    
     logger.info("Logging setup complete. Starting training...")
 
 
