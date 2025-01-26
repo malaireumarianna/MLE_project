@@ -18,7 +18,7 @@ scaler = StandardScaler()
 # Define directories
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.dirname(ROOT_DIR))
-from utils import singleton, get_project_dir, configure_logging
+from utils import singleton, get_project_dir
 
 DATA_DIR = os.path.abspath(os.path.join(ROOT_DIR, '../data'))
 if not os.path.exists(DATA_DIR):
@@ -62,7 +62,7 @@ def load_and_split_iris(save_train_path: os.path, save_inference_path: os.path, 
 
 # Main execution
 if __name__ == "__main__":
-    configure_logging()
+    #configure_logging()
     logger.info("Starting script...")
     load_and_split_iris(save_train_path=TRAIN_PATH, save_inference_path=INFERENCE_PATH)
     logger.info("Script completed successfully.")
