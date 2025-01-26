@@ -21,7 +21,7 @@ MLE_basic_example
 │   ├── Dockerfile
 │   ├── train.py
 │   └── __init__.py
-├── unittests                  # Scripts and Dockerfiles used for training
+├── unittests                  # Scripts used for unittests
 │   └── unittests.py
 ├── utils.py                  # Utility functions and classes that are used in scripts
 ├── settings.json             # All configurable parameters and settings
@@ -49,6 +49,8 @@ docker build -f ./training/Dockerfile --build-arg settings_name=settings.json -t
 ```bash
 docker run -it training_image /bin/bash
 ```
+In this directory can be found file `_logs_for_train.txt` which contains detailed logs for training process, accuracy and loss for testing the model on subset of train data.
+
 - Enter the repository with models and copy the name of saved model by using commands below:
 ```bash
 cd models
@@ -90,7 +92,10 @@ docker run -v /path_to_your_local_model_directory:/app/models -v /path_to_your_i
 ```bash
 docker run -it inference_image /bin/bash  
 ```
-After that ensure that you have your results in the `results` directory in your inference container.
+In this directory can be found file `_logs_for_test.txt` which contains detailed logs for inference.
+
+After that ensure that you have your results in the `results` directory in your inference container. It should contain csv file with the Predicted values.
+
 
 2. Alternatively, you can also run the inference script locally:
 
@@ -100,5 +105,14 @@ python inference/run.py
 
 Replace `/path_to_your_local_model_directory`, `/path_to_your_input_folder`, and `/path_to_your_output_folder` with actual paths on your local machine or network where your models, input, and output are stored.
 
-## Wrap Up
-This project illustrates a simple, yet effective template to organize an ML project. Following good practices and principles, it ensures a smooth transition from model development to deployment.
+## Unittesting
+
+1. TestEvaluateModel
+This test class is designed to evaluate the performance of a model on datasets with and without target labels. It uses a neural network model (IrisNN), which is used for the Iris dataset. It tests scripts from inference/run.py, which contains script for inference without target variable or in case of its presence, like in ours it will calculate loss and accuracy.
+It contains two tests - test_evaluate_with_targets and test_evaluate_without_targets.
+
+2. TestDataProcessor
+This class tests the functionality of a DataProcessor class from train.py that is used for preparing data. This checks whether the data is trimmed to a specified size correctly.
+
+3. TestTraining
+This test class checks the training process of a machine learning model.
