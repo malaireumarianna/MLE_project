@@ -1,6 +1,6 @@
 # Dockerfile for training
 # Start from a base Python image
-FROM python:3.10
+FROM python:3.12-slim
 
 # Initialize settings_name variable with the default value
 ARG settings_name=settings.json
@@ -20,8 +20,12 @@ COPY utils.py /app
 COPY ${CONF_PATH} /app
 
 # Install any necessary packages listed in requirements.txt
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+#COPY requirements.txt ./
+#RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
+
+#CMD ["python", "train.py"]
 # Train the model
 RUN python3 training/train.py
