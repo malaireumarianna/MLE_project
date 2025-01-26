@@ -24,7 +24,7 @@ class TestEvaluateModel(unittest.TestCase):
         self.model = IrisNN()
         self.criterion = torch.nn.CrossEntropyLoss()
 
-        # Data for testing
+
         self.features = torch.randn(20, 10)
         test= pd.DataFrame({
             'x1': [1, 0, 1, 0],
@@ -32,11 +32,11 @@ class TestEvaluateModel(unittest.TestCase):
         }).values.astype(np.float32)
         self.features = torch.from_numpy(test)
 
-        self.features = torch.randn(20, 4)  # Creating random data with 4 features each
+        self.features = torch.randn(20, 4)  
         self.labels = torch.randint(0, 2, (20,))
 
     def test_evaluate_with_targets(self):
-        # Creating a dataset with targets
+        
         dataset_with_targets = TensorDataset(self.features, self.labels)
         data_loader_with_targets = DataLoader(dataset_with_targets, batch_size=4)
 
@@ -46,21 +46,20 @@ class TestEvaluateModel(unittest.TestCase):
         # Check that results DataFrame contains 'Actual' and 'Predicted' columns
         self.assertIn('Actual', results_df.columns)
         self.assertIn('Predicted', results_df.columns)
-        self.assertEqual(len(results_df['Actual']), 20)  # Total entries should match dataset size
+        self.assertEqual(len(results_df['Actual']), 20)  
         self.assertEqual(len(results_df['Predicted']), 20)
 
     def test_evaluate_without_targets(self):
-        # Creating a dataset without targets
+        
         dataset_without_targets = TensorDataset(self.features)
         data_loader_without_targets = DataLoader(dataset_without_targets, batch_size=4)
 
-        # Evaluate the model without passing the criterion as loss calculation is not possible without targets
         results_df = predict_results(self.model, self.criterion, data_loader_without_targets)
 
-        # Check that results DataFrame contains only 'Predicted' column
+        
         self.assertNotIn('Actual', results_df.columns)
         self.assertIn('Predicted', results_df.columns)
-        self.assertEqual(len(results_df['Predicted']), 20)  # Total entries should match dataset size
+        self.assertEqual(len(results_df['Predicted']), 20)  
 
 
 class TestDataProcessor(unittest.TestCase):
@@ -80,11 +79,11 @@ class TestDataProcessor(unittest.TestCase):
 class TestTraining(unittest.TestCase):
     def test_train(self):
         tr = Training(IrisNN())
-        # assume you have some prepared data
+        
         X_train = pd.DataFrame({
             'x1': [1, 0, 1, 0],
             'x2': [1, 1, 0, 0],
-            'x3': [0, 1, 0, 1],  # Add additional features to match model input requirements
+            'x3': [0, 1, 0, 1],  
             'x4': [0, 0, 1, 1],
             'target': [0, 1, 1, 0]
         })
